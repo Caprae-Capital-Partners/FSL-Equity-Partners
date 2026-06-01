@@ -866,6 +866,12 @@ a.leader-linkedin:hover {
   margin-bottom: 40px;
 }
 
+/* Left-align the contact CTA row with the paragraph above it (the shared
+   .hero-cta is centered, which is only correct in the hero). */
+.contact-left .hero-cta {
+  justify-content: flex-start;
+}
+
 .contact-right {
   display: grid;
   gap: 36px;
