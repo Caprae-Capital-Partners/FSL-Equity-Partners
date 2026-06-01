@@ -1,0 +1,96 @@
+/* ============================================================= */
+/* FSL Equity Partners — script.js                              */
+/* Vanilla JS: header scroll state, active nav link, mobile menu */
+/* ============================================================= */
+
+(function () {
+  'use strict';
+
+  var header = document.getElementById('site-header');
+  var nav = document.getElementById('primary-nav');
+  var navToggle = document.getElementById('nav-toggle');
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+
+  /* ---- Sticky header background on scroll -------------------- */
+  function onScroll() {
+    if (window.scrollY > 100) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // set initial state
+
+  /* ---- Active nav link via IntersectionObserver -------------- */
+  // Map section id -> nav link for quick lookup.
+  var linkById = {};
+  navLinks.forEach(function (link) {
+    var id = link.getAttribute('href').replace('#', '');
+    linkById[id] = link;
+  });
+
+  // Observe the sections that have a corresponding nav link.
+  var observedSections = Object.keys(linkById)
+    .map(function (id) {
+      return document.getElementById(id);
+    })
+    .filter(Boolean);
+
+  function setActive(id) {
+    navLinks.forEach(function (link) {
+      link.classList.toggle('active', link === linkById[id]);
+    });
+  }
+
+  if ('IntersectionObserver' in window && observedSections.length) {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        // Pick the most visible intersecting section.
+        var best = null;
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (!best || entry.intersectionRatio > best.intersectionRatio) {
+              best = entry;
+            }
+          }
+        });
+        if (best) {
+          setActive(best.target.id);
+        }
+      },
+      {
+        // Bias the "active" zone to the upper-middle of the viewport,
+        // accounting for the sticky header.
+        rootMargin: '-40% 0px -55% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      }
+    );
+
+    observedSections.forEach(function (section) {
+      observer.observe(section);
+    });
+  }
+
+  /* ---- Mobile hamburger menu --------------------------------- */
+  function closeMenu() {
+    nav.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-label', 'Open menu');
+  }
+
+  function toggleMenu() {
+    var isOpen = nav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    navToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  }
+
+  if (navToggle) {
+    navToggle.addEventListener('click', toggleMenu);
+  }
+
+  // Close the mobile menu after tapping a link.
+  navLinks.forEach(function (link) {
+    link.addEventListener('click', closeMenu);
+  });
+})();

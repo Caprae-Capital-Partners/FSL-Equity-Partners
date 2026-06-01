@@ -1,0 +1,1022 @@
+/* ============================================================= */
+/* FSL Equity Partners — styles.css                              */
+/* ============================================================= */
+
+/* ---- Design tokens ----------------------------------------- */
+:root {
+  --navy: #0f1b2e;        /* primary dark — hero, criteria, contact */
+  --navy-deep: #0a1422;   /* deeper navy — footer / accents */
+  --cream: #f5efe3;       /* primary light bg — story, operations */
+  --cream-warm: #ebe4d2;  /* warmer cream — leadership bg */
+  --cream-light: #fbf8f1; /* lightest cream — commitment bg */
+  --gold: #c9a961;        /* accent — italics, CTA, numbers */
+  --gold-hover: #b8975a;  /* gold hover */
+  --ink: #1a1a1a;         /* primary text on light */
+  --ink-muted: #4a4a4a;   /* secondary text on light */
+  --cream-muted: #d4cdb8; /* muted text on dark */
+
+  --maxw: 1200px;
+  --prose: 720px;
+  --pad-x: 32px;
+  --section-y: 120px;
+  --header-h: 80px;
+}
+
+/* ---- Reset / base ------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ---- Layout helpers ---------------------------------------- */
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+.section {
+  padding: var(--section-y) 0;
+}
+
+/* Offset sticky header for anchored sections */
+section[id] {
+  scroll-margin-top: var(--header-h);
+}
+
+/* Section background variants */
+.section-cream { background: var(--cream); }
+.section-cream-warm { background: var(--cream-warm); }
+.section-cream-light { background: var(--cream-light); }
+.section-navy { background: var(--navy); }
+
+/* ---- Shared type pieces ------------------------------------ */
+.section-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 48px;
+}
+
+.section-label-light {
+  color: var(--cream-muted);
+}
+
+.section-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.section-headline-light {
+  color: var(--cream);
+}
+
+.section-headline-centered {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section-headline em,
+.contact-headline em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.italic-intro {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* Two-column header row used by Criteria / Operations / Process */
+.header-row {
+  display: grid;
+  /* ~40/60 split — narrower headline column, wider intro so the supporting
+     text lands on ~3 lines instead of competing with the headline. */
+  grid-template-columns: 2fr 3fr;
+  gap: 48px;
+  align-items: start;
+  margin-bottom: 72px;
+}
+
+.header-row .italic-intro {
+  max-width: 640px;
+  justify-self: end;
+}
+
+/* ---- Buttons / links --------------------------------------- */
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--navy);
+  padding: 16px 32px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: var(--gold-hover);
+}
+
+.link-secondary {
+  color: var(--cream);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.link-gold {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+}
+
+.link-gold:hover {
+  color: var(--gold-hover);
+}
+
+/* ============================================================= */
+/* HEADER                                                        */
+/* ============================================================= */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.site-header.scrolled {
+  background: var(--navy);
+  border-bottom: 1px solid rgba(212, 205, 184, 0.15);
+}
+
+.header-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.brand-monogram {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brand-wordmark {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 19px;
+  color: var(--cream);
+}
+
+.brand-tagline {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+}
+
+/* Nav */
+.nav {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-link {
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--cream);
+  text-decoration: none;
+  padding-bottom: 4px;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.5px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* Hamburger (hidden on desktop) */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--cream);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* ============================================================= */
+/* SECTION 1 · HERO                                              */
+/* ============================================================= */
+.hero {
+  background: var(--navy);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--header-h) + 40px) var(--pad-x) 80px;
+}
+
+.hero-content {
+  max-width: 760px;
+  text-align: center;
+  /* bias slightly above center */
+  transform: translateY(-4%);
+}
+
+.hero-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+}
+
+.hero-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 72px;
+  line-height: 1.1;
+  color: var(--cream);
+  margin-bottom: 32px;
+}
+
+.hero-headline em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--cream);
+  max-width: 580px;
+  margin: 0 auto 40px;
+}
+
+.hero-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================= */
+/* SECTION 2 · OUR STORY                                         */
+/* ============================================================= */
+.story-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1.2;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.prose {
+  max-width: var(--prose);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.prose p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+}
+
+.prose p + p {
+  margin-top: 24px;
+}
+
+.story-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* ============================================================= */
+/* SECTION 3 · LEADERSHIP                                        */
+/* ============================================================= */
+.leadership-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+/* Photo placeholder — diagonal hatching */
+.photo-placeholder {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-color: var(--cream);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(15, 27, 46, 0.08),
+    rgba(15, 27, 46, 0.08) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+  display: grid;
+  place-items: center;
+  margin-bottom: 24px;
+}
+
+.photo-placeholder-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* Real portraits — same footprint as the placeholders */
+.photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top center;
+  background: var(--cream);
+  margin-bottom: 24px;
+}
+
+/* Family photo — landscape, centered, matches its natural 4:3 ratio */
+.photo-family {
+  aspect-ratio: 4 / 3;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.leader-role {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.leader-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.leader-linkedin {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--ink-muted);
+  text-decoration: none;
+  margin-bottom: 24px;
+}
+
+a.leader-linkedin:hover {
+  color: var(--gold);
+}
+
+.leader-linkedin-plain {
+  cursor: default;
+}
+
+.leader-bio p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+}
+
+.leader-bio p + p {
+  margin-top: 18px;
+}
+
+.leader-bio-italic {
+  font-style: italic;
+}
+
+/* Shared paragraph + family photo below the two bio columns */
+.leadership-shared {
+  max-width: 760px;
+  margin: 40px auto 32px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+}
+
+.photo-placeholder-family {
+  aspect-ratio: 3 / 2;
+  max-width: 800px;
+  margin: 0 auto; /* centered; overrides base 24px bottom margin */
+}
+
+/* Jessica bio card */
+.bio-card {
+  border: 1px solid var(--cream-muted);
+  padding: 24px;
+}
+
+.bio-card-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 16px;
+}
+
+.bio-card .leader-bio-italic {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+  margin-bottom: 12px;
+}
+
+.bio-card p:last-child {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+}
+
+/* ============================================================= */
+/* SECTION 4 · OUR COMMITMENT                                    */
+/* ============================================================= */
+.italic-intro-centered {
+  max-width: 760px;
+  margin: 0 auto 64px;
+  text-align: center;
+  font-size: 28px;
+}
+
+.commitment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.commitment-card {
+  border-top: 1px solid var(--cream-muted);
+  padding: 32px;
+}
+
+.card-number {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.card-desc {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+}
+
+/* ============================================================= */
+/* SECTION 5 · INVESTMENT CRITERIA                               */
+/* ============================================================= */
+.italic-intro-light {
+  color: var(--cream-muted);
+  font-size: 18px;
+}
+
+.criteria-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.criteria-quadrant {
+  padding-top: 40px;
+  border-top: 1px solid rgba(212, 205, 184, 0.2);
+}
+
+.quadrant-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.quadrant-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 28px;
+  color: var(--gold);
+}
+
+.quadrant-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 28px;
+  color: var(--cream);
+}
+
+.criteria-list {
+  list-style: none;
+}
+
+.criteria-list li {
+  margin-bottom: 22px;
+}
+
+.criteria-list li:last-child {
+  margin-bottom: 0;
+}
+
+.criteria-term {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--cream);
+  margin-bottom: 4px;
+}
+
+.criteria-desc {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--cream-muted);
+}
+
+/* ============================================================= */
+/* SECTION 6 · OPERATIONAL STYLE                                 */
+/* ============================================================= */
+.operations-list {
+  margin-top: 8px;
+}
+
+.operation-row {
+  display: grid;
+  grid-template-columns: 80px 280px 1fr;
+  gap: 24px;
+  align-items: baseline;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--cream-muted);
+}
+
+.operation-row:first-child {
+  border-top: 1px solid var(--cream-muted);
+}
+
+.operation-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 28px;
+  color: var(--gold);
+}
+
+.operation-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.operation-desc {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+}
+
+/* ============================================================= */
+/* SECTION 7 · TRANSITION PROCESS                                */
+/* ============================================================= */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* Six rows — one per card element — so subgrid can align them across cards */
+  grid-template-rows: repeat(6, auto);
+  column-gap: 32px;
+  row-gap: 0;
+}
+
+.process-card {
+  /* Adopt the parent's row tracks so equivalent elements (title, "THE GOAL",
+     body, etc.) line up horizontally across all four cards regardless of how
+     many lines each title wraps to. */
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 6;
+  border-top: 1px solid var(--cream-muted);
+  padding-top: 24px;
+}
+
+.process-card-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.process-step {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.process-duration {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.process-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--ink);
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.process-subhead {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+.process-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-muted);
+}
+
+/* ============================================================= */
+/* SECTION 8 · CONTACT                                           */
+/* ============================================================= */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.contact-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1.1;
+  color: var(--cream);
+  margin-bottom: 28px;
+}
+
+.contact-copy {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--cream-muted);
+  max-width: 440px;
+  margin-bottom: 40px;
+}
+
+.contact-right {
+  display: grid;
+  gap: 36px;
+  padding-top: 12px;
+}
+
+.contact-detail-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+  margin-bottom: 8px;
+}
+
+.contact-detail-value {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  color: var(--cream);
+}
+
+.contact-detail-value a {
+  text-decoration: none;
+}
+
+.contact-detail-value a:hover {
+  color: var(--gold);
+}
+
+/* ============================================================= */
+/* FOOTER                                                        */
+/* ============================================================= */
+.site-footer {
+  background: var(--navy-deep);
+  padding: 40px 0;
+}
+
+.footer-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-monogram-small {
+  width: 28px;
+  height: 28px;
+  font-size: 17px;
+}
+
+.footer-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+}
+
+/* ============================================================= */
+/* RESPONSIVE — single breakpoint at 768px                       */
+/* ============================================================= */
+@media (max-width: 768px) {
+  :root {
+    --section-y: 80px;
+  }
+
+  /* Header / nav → hamburger */
+  .nav-toggle {
+    display: flex;
+  }
+
+  .site-header {
+    /* solid once menu is usable on mobile for legibility */
+    background: var(--navy);
+  }
+
+  .nav {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--navy);
+    border-top: 1px solid rgba(212, 205, 184, 0.15);
+    padding: 8px 0 16px;
+    transform: translateY(-120%);
+    transition: transform 0.3s ease;
+    visibility: hidden;
+  }
+
+  .nav.open {
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .nav-link {
+    padding: 16px var(--pad-x);
+  }
+
+  .nav-link::after {
+    left: var(--pad-x);
+    width: auto;
+    right: auto;
+  }
+
+  /* Hamburger → X when open */
+  .nav-toggle[aria-expanded='true'] .nav-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded='true'] .nav-toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle[aria-expanded='true'] .nav-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Type scale down */
+  .hero-headline {
+    font-size: 48px;
+  }
+
+  .section-headline,
+  .contact-headline {
+    font-size: 36px;
+  }
+
+  .story-headline {
+    font-size: 32px;
+  }
+
+  .italic-intro,
+  .italic-intro-centered {
+    font-size: 22px;
+  }
+
+  /* Collapse multi-column grids */
+  .header-row,
+  .leadership-grid,
+  .commitment-grid,
+  .criteria-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .header-row {
+    margin-bottom: 48px;
+  }
+
+  .header-row .italic-intro {
+    justify-self: start;
+    max-width: 100%;
+  }
+
+  /* Process: stack to single column */
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Operations rows stack */
+  .operation-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .section-headline-centered {
+    margin-bottom: 48px;
+  }
+}
+
+/* Tablet: process grid 2x2 (between mobile and desktop) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .process-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
