@@ -126,16 +126,16 @@ section[id] {
 /* Two-column header row used by Criteria / Operations / Process */
 .header-row {
   display: grid;
-  /* ~40/60 split — narrower headline column, wider intro so the supporting
-     text lands on ~3 lines instead of competing with the headline. */
-  grid-template-columns: 2fr 3fr;
+  /* ~33/67 split — narrow headline column, wider intro so the supporting
+     text lands on 3 lines instead of competing with the headline. */
+  grid-template-columns: 1fr 2fr;
   gap: 48px;
   align-items: start;
   margin-bottom: 72px;
 }
 
 .header-row .italic-intro {
-  max-width: 640px;
+  max-width: 760px;
   justify-self: end;
 }
 
