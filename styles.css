@@ -482,14 +482,24 @@ section[id] {
   margin-top: 32px;
 }
 
-/* Family photo — landscape, centered, matches its natural 4:3 ratio */
-.photo-family {
+/* Family photo — small, contained supporting touch (≈2× a headshot wide),
+   centered below the shared paragraph. Never scales beyond 560px; the image
+   is constrained by the container, not the other way around. */
+.family-photo {
   width: 100%;
+  max-width: 560px;
   aspect-ratio: 4 / 3;
-  max-width: 800px;
   margin: 0 auto;
-  object-fit: cover;
+  overflow: hidden;
   background: var(--cream);
+}
+
+.family-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
 }
 
 .leader-role {
