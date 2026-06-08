@@ -251,6 +251,13 @@ section[id] {
   color: var(--cream);
 }
 
+/* Header logo (reversed, transparent — blends into the navy header) */
+.brand-logo {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+
 .brand-tagline {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
