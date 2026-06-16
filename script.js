@@ -98,8 +98,10 @@
   var modal = document.getElementById('contact-modal');
   var modalClose = document.getElementById('modal-close');
   var contactForm = document.getElementById('contact-form');
-  // The gold CTAs ("Connect Confidentially", "Schedule a Call") open the modal.
-  var ctaButtons = Array.prototype.slice.call(document.querySelectorAll('.btn-primary'));
+  // Only the contact section's "Schedule a Call" CTA opens the modal. The hero
+  // "Connect Confidentially" button just scrolls to the contact section (its
+  // href="#contact").
+  var ctaButtons = [document.getElementById('schedule-call')].filter(Boolean);
   var lastFocused = null;
 
   function openModal(e) {
