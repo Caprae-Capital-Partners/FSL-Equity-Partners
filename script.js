@@ -93,4 +93,87 @@
   navLinks.forEach(function (link) {
     link.addEventListener('click', closeMenu);
   });
+
+  /* ---- Contact modal ----------------------------------------- */
+  var modal = document.getElementById('contact-modal');
+  var modalClose = document.getElementById('modal-close');
+  var contactForm = document.getElementById('contact-form');
+  // The gold CTAs ("Connect Confidentially", "Schedule a Call") open the modal.
+  var ctaButtons = Array.prototype.slice.call(document.querySelectorAll('.btn-primary'));
+  var lastFocused = null;
+
+  function openModal(e) {
+    if (e) e.preventDefault();
+    lastFocused = document.activeElement;
+    closeMenu(); // in case the mobile menu is open
+    modal.hidden = false;
+    // Force reflow so the transition runs from the hidden state.
+    void modal.offsetWidth;
+    modal.classList.add('open');
+    var first = document.getElementById('field-first');
+    if (first) first.focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    modal.addEventListener(
+      'transitionend',
+      function handler() {
+        modal.hidden = true;
+        modal.removeEventListener('transitionend', handler);
+      },
+      { once: true }
+    );
+    if (lastFocused) lastFocused.focus();
+  }
+
+  if (modal && contactForm) {
+    ctaButtons.forEach(function (btn) {
+      btn.addEventListener('click', openModal);
+    });
+
+    modalClose.addEventListener('click', closeModal);
+
+    // Click outside the dialog (on the overlay) closes it.
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
+
+    // Escape closes it.
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hidden) closeModal();
+    });
+
+    // Static site: hand the details off to the visitor's email client,
+    // pre-addressed to Fred with the form contents.
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!contactForm.reportValidity()) return;
+
+      var data = new FormData(contactForm);
+      var firstName = (data.get('firstName') || '').trim();
+      var lastName = (data.get('lastName') || '').trim();
+      var email = (data.get('email') || '').trim();
+      var message = (data.get('message') || '').trim();
+
+      var subject = 'Schedule a Call — ' + firstName + ' ' + lastName;
+      var body =
+        'Name: ' + firstName + ' ' + lastName + '\n' +
+        'Email: ' + email + '\n\n' +
+        message;
+
+      var mailto =
+        'mailto:fred@fslequitypartners.com' +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(body);
+
+      // Trigger via a synthetic anchor click so the browser reliably prompts
+      // to open the mail app (more dependable than setting location.href).
+      var link = document.createElement('a');
+      link.href = mailto;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
 })();

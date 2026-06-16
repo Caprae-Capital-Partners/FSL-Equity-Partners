@@ -151,7 +151,7 @@
                   class="leader-linkedin"
                   target="_blank"
                   rel="noopener"
-                  >LinkedIn · in/frederico-lourenco →</a
+                  >LinkedIn</a
                 >
               </div>
             </div>
@@ -200,7 +200,7 @@
                   class="leader-linkedin"
                   target="_blank"
                   rel="noopener"
-                  >LinkedIn · in/jessica-saks →</a
+                  >LinkedIn</a
                 >
               </div>
             </div>
@@ -374,7 +374,7 @@
               <li>
                 <span class="criteria-term">Team Stability</span>
                 <span class="criteria-desc"
-                  >A loyal, skilled staff or middle management capable of continuing daily
+                  >A loyal, skilled staff and middle management capable of continuing daily
                   operations alongside the incoming CEO.</span
                 >
               </li>
@@ -610,33 +610,18 @@
               <a href="#contact" class="btn btn-primary">Schedule a Call →</a>
               <a href="mailto:fred@fslequitypartners.com" class="link-secondary">Email Us</a>
             </div>
-          </div>
 
-          <div class="contact-right">
-            <div class="contact-detail">
-              <p class="contact-detail-label">Direct Phone</p>
-              <p class="contact-detail-value">(347) 640-0144</p>
-            </div>
-            <div class="contact-detail">
-              <p class="contact-detail-label">Email</p>
-              <p class="contact-detail-value">
-                <a href="mailto:fred@fslequitypartners.com">fred@fslequitypartners.com</a>
-              </p>
-            </div>
-            <div class="contact-detail">
-              <p class="contact-detail-label">LinkedIn</p>
-              <p class="contact-detail-value">
-                <a
-                  href="https://www.linkedin.com/in/frederico-lourenco/"
-                  target="_blank"
-                  rel="noopener"
-                  >Connect with Frederico</a
-                >
-              </p>
-            </div>
-            <div class="contact-detail">
-              <p class="contact-detail-label">Office</p>
-              <p class="contact-detail-value">Boca Raton, Florida</p>
+            <div class="contact-details">
+              <div class="contact-detail">
+                <p class="contact-detail-label">Direct Phone</p>
+                <p class="contact-detail-value">(347) 640-0144</p>
+              </div>
+              <div class="contact-detail">
+                <p class="contact-detail-label">Email</p>
+                <p class="contact-detail-value">
+                  <a href="mailto:fred@fslequitypartners.com">fred@fslequitypartners.com</a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -649,13 +634,53 @@
   <!-- ============================================================= -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="brand-monogram brand-monogram-small" aria-hidden="true">F</span>
-        <span class="footer-text">FSL Equity Partners · Boca Raton, FL</span>
-      </div>
       <p class="footer-text">© 2026 FSL Equity Partners · All Rights Reserved</p>
     </div>
   </footer>
+
+  <!-- ============================================================= -->
+  <!-- CONTACT MODAL                                                 -->
+  <!-- ============================================================= -->
+  <div class="modal-overlay" id="contact-modal" hidden>
+    <div
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="contact-modal-title"
+    >
+      <button type="button" class="modal-close" id="modal-close" aria-label="Close">
+        &times;
+      </button>
+      <p class="section-label">Get in Touch</p>
+      <h2 class="modal-title" id="contact-modal-title">Schedule a Call</h2>
+      <p class="modal-subtitle">
+        Share a few details and we'll be in touch to arrange a private, confidential
+        conversation.
+      </p>
+
+      <form class="modal-form" id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="field-first">First Name</label>
+            <input type="text" id="field-first" name="firstName" autocomplete="given-name" required />
+          </div>
+          <div class="form-field">
+            <label for="field-last">Last Name</label>
+            <input type="text" id="field-last" name="lastName" autocomplete="family-name" required />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="field-email">Email</label>
+          <input type="email" id="field-email" name="email" autocomplete="email" required />
+        </div>
+        <div class="form-field">
+          <label for="field-message">Message</label>
+          <textarea id="field-message" name="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" id="contact-submit" class="btn btn-primary modal-submit">Send →</button>
+      </form>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

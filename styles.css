@@ -457,12 +457,18 @@ section[id] {
   color: var(--ink-muted);
 }
 
-/* Principal header: small fixed headshot on the left, meta block on the right,
-   both top-aligned. Bio flows full-width below this row. */
+/* Principal header: headshot centered in its column, name/title centered
+   directly below it. Bio flows full-width below this block. */
 .principal-header {
   display: flex;
-  gap: 32px;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+
+.principal-meta {
+  min-width: 0;
 }
 
 /* Strict fixed-size headshot — never scales beyond 280×320 regardless of
@@ -532,7 +538,7 @@ section[id] {
   display: inline-block;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 16px;
   color: var(--ink-muted);
   text-decoration: none;
   margin-bottom: 24px;
@@ -662,7 +668,8 @@ a.leader-linkedin:hover {
 /* ============================================================= */
 .italic-intro-light {
   color: var(--cream-muted);
-  font-size: 18px;
+  /* Match the size of the Section 03 intro (.italic-intro-centered). */
+  font-size: 28px;
 }
 
 .criteria-grid {
@@ -849,9 +856,7 @@ a.leader-linkedin:hover {
 /* ============================================================= */
 .contact-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 64px;
-  align-items: start;
+  grid-template-columns: 1fr;
 }
 
 .contact-headline {
@@ -870,35 +875,42 @@ a.leader-linkedin:hover {
   line-height: 1.7;
   color: var(--cream-muted);
   max-width: 440px;
-  margin-bottom: 40px;
+  margin: 0 auto 40px;
 }
 
-/* Left-align the contact CTA row with the paragraph above it (the shared
-   .hero-cta is centered, which is only correct in the hero). */
+/* Entire contact block is centered. */
+.contact-left {
+  text-align: center;
+}
+
 .contact-left .hero-cta {
-  justify-content: flex-start;
+  justify-content: center;
 }
 
-.contact-right {
-  display: grid;
-  gap: 36px;
-  padding-top: 12px;
+/* Phone + email sit below the CTA row, centered and smaller. */
+.contact-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px 56px;
+  margin-top: 48px;
+  text-align: center;
 }
 
 .contact-detail-label {
   font-family: 'Inter', sans-serif;
   font-weight: 500;
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--cream-muted);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .contact-detail-value {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 14px;
   color: var(--cream);
 }
 
@@ -924,7 +936,7 @@ a.leader-linkedin:hover {
   padding: 0 var(--pad-x);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 24px;
 }
 
@@ -947,6 +959,162 @@ a.leader-linkedin:hover {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--cream-muted);
+}
+
+/* ============================================================= */
+/* CONTACT MODAL                                                 */
+/* ============================================================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(10, 20, 34, 0.72);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background: var(--cream-light);
+  padding: 48px;
+  transform: translateY(12px);
+  transition: transform 0.25s ease;
+}
+
+.modal-overlay.open .modal {
+  transform: translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--ink-muted);
+  transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+  color: var(--ink);
+}
+
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.1;
+  color: var(--ink);
+  margin: 8px 0 12px;
+}
+
+.modal-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+  margin-bottom: 28px;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.form-field input,
+.form-field textarea {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--cream-warm);
+  padding: 12px 14px;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.form-field input:user-invalid,
+.form-field textarea:user-invalid {
+  border-color: #b4453a;
+}
+
+.modal-submit {
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.modal-feedback {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 768px) {
+  .modal {
+    padding: 36px 24px;
+  }
+
+  .modal-title {
+    font-size: 34px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================================= */
@@ -1046,9 +1214,18 @@ a.leader-linkedin:hover {
     max-width: 100%;
   }
 
-  /* Process: stack to single column */
+  /* Process: stack to single column. Drop the cross-card subgrid alignment
+     (only meaningful side-by-side) and add real gap between stacked cards so
+     the border line below each step isn't crammed against its text. */
   .process-grid {
     grid-template-columns: 1fr;
+    row-gap: 40px;
+  }
+
+  .process-card {
+    display: block;
+    grid-template-rows: none;
+    grid-row: auto;
   }
 
   /* Operations rows stack */
@@ -1061,10 +1238,14 @@ a.leader-linkedin:hover {
     margin-bottom: 48px;
   }
 
-  /* Photo + meta row stays horizontal; headshot scales down. */
+  /* Headshot scales down on small screens. */
   .principal-photo {
     width: 200px;
     height: 240px;
+  }
+
+  .leader-name {
+    font-size: 32px;
   }
 }
 
