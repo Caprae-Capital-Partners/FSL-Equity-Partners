@@ -144,36 +144,50 @@
       if (e.key === 'Escape' && !modal.hidden) closeModal();
     });
 
-    // Static site: hand the details off to the visitor's email client,
-    // pre-addressed to Fred with the form contents.
+    // Submissions POST to Web3Forms (no backend) and land in the inbox tied
+    // to the access_key. Shows sending / success / error feedback in place.
+    var submitBtn = document.getElementById('contact-submit');
+
+    function showFeedback(message) {
+      contactForm.innerHTML = '<p class="modal-feedback">' + message + '</p>';
+    }
+
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!contactForm.reportValidity()) return;
 
       var data = new FormData(contactForm);
       var firstName = (data.get('firstName') || '').trim();
-      var lastName = (data.get('lastName') || '').trim();
-      var email = (data.get('email') || '').trim();
-      var message = (data.get('message') || '').trim();
 
-      var subject = 'Schedule a Call — ' + firstName + ' ' + lastName;
-      var body =
-        'Name: ' + firstName + ' ' + lastName + '\n' +
-        'Email: ' + email + '\n\n' +
-        message;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+      }
 
-      var mailto =
-        'mailto:fred@fslequitypartners.com' +
-        '?subject=' + encodeURIComponent(subject) +
-        '&body=' + encodeURIComponent(body);
-
-      // Trigger via a synthetic anchor click so the browser reliably prompts
-      // to open the mail app (more dependable than setting location.href).
-      var link = document.createElement('a');
-      link.href = mailto;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: data,
+      })
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (json) {
+          if (json.success) {
+            showFeedback(
+              'Thank you, ' + (firstName || 'and thanks') + '. Your message has ' +
+                'been sent — we\'ll be in touch shortly.'
+            );
+          } else {
+            throw new Error(json.message || 'Submission failed');
+          }
+        })
+        .catch(function () {
+          showFeedback(
+            'Something went wrong sending your message. Please email us directly at ' +
+              '<a href="mailto:fred@fslequitypartners.com">fred@fslequitypartners.com</a>.'
+          );
+        });
     });
   }
 })();
